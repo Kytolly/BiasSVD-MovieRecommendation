@@ -1,0 +1,4 @@
+underlying_features_K : 3 # 描述潜在特征数
+steps: 1000               # 描述迭代次数
+lambda_r: 0.001             # 描述正则化系数
+learning_rate: 0.997      # 描述学习率
