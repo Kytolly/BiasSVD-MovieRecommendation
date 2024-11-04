@@ -1,29 +1,28 @@
-from parameter import Parameters
-from process import Processer
-from train import Trainer
-from validate import Validator
-from testing import Tester
+from src.parameter import Parameters
+from src.process import Processer
+from src.train import Trainer
+from src.validate import Validator
+from src.testing import Tester
 import pandas as pd
 
-class Main():
+class Draft():
     def __init__(self):
         self.config_path = 'config/config.yaml'
-        self.movies_path = 'data/ml-latest-small/movies.csv'
-        self.ratings_path = 'data/ml-latest-small/ratings.csv'
+        self.movies_path = 'data/small/movies.csv'
+        self.ratings_path = 'data/small/ratings.csv'
         self.log_path = 'log/info.log'
 
     def run(self): 
-        parameters = Parameters(self.config_path)
-        process = Processer(self.movies_path, self.ratings_path, parameters.underlying_features_K)
-        trainer = Trainer(self.config_path, process.movie, process.user, process.bias_movie, process.bias_user)
+        process = Processer(self.movies_path, self.ratings_path)
+        trainer = Trainer(process.movies_num , process.users_num, self.config_path)
         
         with open(self.log_path, 'w', encoding='utf-8') as f:
             print('start training...\n', file = f)
-            Rating_test = process.dataset_slices[0]
+            Rating_test = process.rating_slices[0]
             for i in range(1, 10):
                 print(f"the turn {i} start!", file = f)
-                Rating_validate = process.dataset_slices[i]
-                Rating_train = pd.concat(process.dataset_slices[1:i] +process.dataset_slices[i+1:])
+                Rating_validate = process.rating_slices[i]
+                Rating_train = pd.concat(process.rating_slices[1:i] +process.rating_slices[i+1:])
                 trainer.train(Rating_train)
                 # trainer.save(trainer.name + f'turn{i}')
                 validator = Validator(trainer, Rating_validate)
@@ -38,4 +37,4 @@ class Main():
         
 
 if __name__ == "__main__":
-    Main().run()
+    Draft().run()
