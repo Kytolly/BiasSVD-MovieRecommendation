@@ -4,12 +4,12 @@ import numpy as np
 import tensorflow as tf 
 
 class Trainer(Parameters):
-    def __init__(self, config_path: str, movie: tf.Variable, user: tf.Variable, bias_movie: tf.Variable, bias_user: tf.Variable): 
+    def __init__(self, config_path: str, movies_num, users_num): 
         self.compile(config_path)
-        self.movie = movie
-        self.user = user
-        self.bias_movie = bias_movie
-        self.bias_user = bias_user
+        self.movie = tf.Variable(tf.random.normal([movies_num, self.underlying_features_K], dtype=tf.float64))
+        self.bias_movie = tf.Variable(tf.random.normal([movies_num, 1], dtype=tf.float64))
+        self.user = tf.Variable(tf.random.normal([users_num, self.underlying_features_K], dtype=tf.float64))
+        self.bias_user = tf.Variable(tf.random.normal([users_num, 1], dtype=tf.float64))
         
     def compile(self, config_path: str) :
         super().__init__(config_path)

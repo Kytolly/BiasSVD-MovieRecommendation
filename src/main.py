@@ -13,9 +13,8 @@ class Main():
         self.log_path = 'log/info.log'
 
     def run(self): 
-        parameters = Parameters(self.config_path)
-        process = Processer(self.movies_path, self.ratings_path, parameters.underlying_features_K)
-        trainer = Trainer(self.config_path, process.movie, process.user, process.bias_movie, process.bias_user)
+        process = Processer(self.movies_path, self.ratings_path)
+        trainer = Trainer(self.config_path, process.movies_num, process.users_num)
         
         with open(self.log_path, 'w', encoding='utf-8') as f:
             print('start training...\n', file = f)
