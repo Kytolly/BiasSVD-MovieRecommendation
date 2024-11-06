@@ -31,7 +31,7 @@ class Main():
             print('start tesing...\n', file = f)
             tester = Tester(trainer, Rating_test)
             result = tester.result
-            print(f"the turn {i} finished, the validating result is: {result}", file = f)
+            print(f"the testing result is: {result}", file = f)
             
         f.close()
         
