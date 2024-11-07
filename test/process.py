@@ -1,10 +1,17 @@
 import pandas as pd
 import numpy as np
+from itertools import chain
 from sklearn.model_selection import train_test_split  
 import tensorflow as tf 
 
 class Processer():
-    def __init__(self, movies_path: str, ratings_path: str):
+    def __init__(self, movies_path, ratings_path: str):
+        self.movies_num = 0
+        self.users_num = 0
+        self.movie_dict = {}
+        self.user_dict = {}
+        self.dataset_slices = [] 
+        
         self.loadMovies(movies_path)
         self.loadUsers(ratings_path)
         ratings = self.loadRatings(ratings_path)
@@ -31,18 +38,24 @@ class Processer():
         print(f'the user_dict is {self.user_dict}')
         
     def loadRatings(self, ratings_path: str):  
+        # 优化
         ratings = pd.read_csv(ratings_path, sep=',', encoding='utf-8') 
+        
         movie_col = ratings.loc[:, 'movieId'].to_numpy()
         new_movie_col = [self.movie_dict[movie_id] for movie_id in movie_col]
         ratings['movieId'] = new_movie_col
+        
         user_col = ratings.loc[:, 'userId'].to_numpy()
         new_user_col = [self.user_dict[user_id] for user_id in user_col]
         ratings['userId'] = new_user_col
+        
+        ratings = [(int(userId), int(movieId), np.float64(rating)) for userId,movieId,rating 
+                   in zip(ratings['userId'], ratings['movieId'], ratings['rating'])]
+        
         print(f'the rating is loaded as {ratings}')
         return ratings
         
     def split(self, ratings):
-        self.dataset_slices = [] 
         for i in range(10, 1, -1):
             print(f'the split range in {i}')
             
@@ -55,3 +68,20 @@ class Processer():
                 self.dataset_slices.append(ratings)
                 
         print(f'the slices length is {len(self.dataset_slices)}')
+    
+    def cross(self, i):
+        # train-validate-test
+        return (
+            self.dataset_slices[1:i] + self.dataset_slices[i+1:],
+            self.dataset_slices[i],
+            self.dataset_slices[0]
+        )
+    
+    def getTrainSet(self, i): 
+        return list(chain.from_iterable(self.dataset_slices[j] for j in range(1, 10) if j != i))
+    
+    def getValidateSet(self, i):
+        return self.dataset_slices[i]
+    
+    def getTestSet(self):
+        return  self.dataset_slices[0]
