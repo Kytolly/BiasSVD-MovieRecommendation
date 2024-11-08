@@ -7,10 +7,10 @@ from testing import Tester
 
 class Main():
     def __init__(self): 
-        env = Env()
+        self.env = Env()
         self.paras = Parameters()
-        self.paras.loadConfig(env.config_path)
-        self.pre = Processer(env.movies_path, env.ratings_path)
+        self.paras.loadConfig(self.env.config_path)
+        self.pre = Processer(self.env.movies_path, self.env.ratings_path)
         self.model = Model(self.pre.movies_num, self.pre.users_num, self.paras.underlying_features_K, self.paras.learning_rate)
         self.trainer = Trainer()
         self.trainer.compile(self.paras)
@@ -24,6 +24,7 @@ class Main():
             Rating_train = self.pre.getTrainSet(i)
             self.trainer.train(self.model, Rating_train)
             print(f'the turn {i} training finished!')
+            self.model.save(self.env.model_dir + self.paras.name())
             
             validator = Tester(self.model, Rating_validate)
             result = validator.result

@@ -2,8 +2,8 @@ import yaml
 
 class Parameters():
     def __init__(self):
-        self.underlying_features_K = 3
-        self.steps = 5000
+        self.underlying_features_K = 10
+        self.steps = 10000
         self.lambda_r = 0.0001
         self.learning_rate = 0.01
     
