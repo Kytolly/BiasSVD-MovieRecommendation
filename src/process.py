@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 from itertools import chain
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split  
+import tensorflow as tf 
 
 class Processer():
     def __init__(self, movies_path, ratings_path: str):

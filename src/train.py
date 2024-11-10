@@ -1,5 +1,8 @@
-from SVDmodel import Model
+from mymodel import Model
 from parameter import Parameters
+import pandas as pd 
+import numpy as np
+import tensorflow as tf 
 
 class Trainer():
     def __init__(self):  

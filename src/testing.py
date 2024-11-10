@@ -1,4 +1,4 @@
-from SVDmodel import Model
+from mymodel import Model
 import tensorflow as tf 
 
 class Tester():
