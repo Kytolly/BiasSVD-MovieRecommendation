@@ -1,2 +1,1 @@
-cd ../src
-python3 -m main.py
+python D:/Desktop/myfile/UESTC-courses/Grade5/信息检索/SVD/src/main.py 

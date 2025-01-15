@@ -7,16 +7,16 @@ from SVDmodel import Model
 
 class Main():
     def __init__(self):
-        env = Env()
+        self.env = Env()
         self.paras = Parameters()
-        self.paras.loadConfig(env.config_path)
-        self.pre = Processer(env.movies_path, env.ratings_path)
+        self.paras.loadConfig(self.env.config_path)
+        self.pre = Processer(self.env.movies_path, self.env.ratings_path)
         self.model = Model(self.pre.movies_num, self.pre.users_num, self.paras.underlying_features_K, self.paras.learning_rate)
         self.trainer = Trainer()
         self.trainer.compile(self.paras)
 
     def run(self): 
-        with open(self.log_path, 'w', encoding='utf-8') as f:
+        with open(self.env.log_path, 'w', encoding='utf-8') as f:
             print('start training...\n', file = f)
             Rating_test = self.pre.getTestSet()
             
@@ -30,7 +30,7 @@ class Main():
                 print(f"the turn {i} finished, the validating result is: {validator.result}", file = f)
             
             print('start tesing...\n', file = f)
-            tester = Tester(self.trainer, Rating_test) 
+            tester = Tester(self.model, Rating_test) 
             print(f"the testing result is: {tester.result}", file = f)
             
         f.close()

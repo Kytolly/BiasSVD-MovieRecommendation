@@ -1,78 +1,45 @@
-# 信息检索课程作业
+# Movie Recommendation Based on BiasSVD(UESTC-信息检索-期末设计) 
 
-## 题目
+## Introduction
 
-基于矩阵分解算法的评分预测实现
+This project implements movie rating prediction based on matrix factorization algorithms. The MovieLens dataset contains rating data from multiple users for various movies, alongside movie metadata and user attributes. This dataset is commonly used for testing recommendation systems and machine learning algorithms.
 
-## 主要任务
+For the final project, we primarily use the ratings.csv and movies.csv files from the MovieLens Latest Datasets (ml-latest.zip), which include user IDs, movie IDs, ratings, movie titles, and genres. If the hardware conditions are insufficient, the smaller dataset ml-latest-small.zip can also be used.
 
-1. 查阅相关资料，了解矩阵分解算法的基本概念、应用场景及其难点。
-    * 重点了解SVD（Singular Value Decomposition，奇异值分解）系列方法。
+[The dataset can be downloaded](https://grouplens.org/datasets/movielens/).
 
-2. 掌握Python语言的基本使用。
+> Dataset file descriptions:
+> movies: Over 90,000 lines (movieId, title, genres)
+> links: Over 90,000 lines (movieId, imdbId, tmdbId)
+> ratings: Over 27,000,000 lines (userId, movieId, rating, timestamp)
+> tags: Over 2,000,000 lines (userId, movieId, tag, timestamp)
 
-3. 了解梯度下降算法概念，熟悉并复现矩阵分解算法。
+## Dependency
 
-4. 在标准评测数据集MovieLens上验证矩阵分解算法。
+The primary Python libraries required for this project are numpy, pandas, sklearn, and tensorflow. Refer to the requirement.txt file for specific version requirements.
+For convenience, you can use the pre-configured Docker image for environment setup: docker pull MovieRec.
+This project supports Windows and Linux systems, and Python version 3 or higher.
 
-## 实验环境
+## Usage
 
-Windows或Linux, Python 3及以上
+1. Data Preprocessing:
+    The dataset is split using an 8:1:1 ratio for training, validation, and testing.
+    Model Training and Packaging:
 
-## 数据集简介
+2. In the dev branch, the model has been further encapsulated to support saving after training, allowing for subsequent retraining or predictions.
 
-MovieLen数据集包含多个用户对多部电影的评分数据，也包括电影元数据信息和用户属性信息。这个数据集经常用来做推荐系统，机器学习算法的测试数据集。
+## Evaluation 
 
-本次作业主要利用MovieLens Latest Datasets (ml-latest.zip)解压后的ratings.csv和movies.csv文件，其中包含用户ID、电影ID、评分、电影名称、电影类型。若硬件条件不足，也可以使用ml-latest-small.zip数据集。
+The rating prediction model is evaluated using Mean Squared Error (MSE). The current MSE is 1.954, indicating that the model performs well in predicting ratings for movies that users have not yet watched. Detailed training logs and evaluation information can be found in the log/info.log file.
 
-数据集下载地址为：https://grouplens.org/datasets/movielens/。
+## License
+This project is licensed under the MIT License, meaning you're free to use the source code however you like.
 
-> movies: 9w-- lines (movieId,title,genres)
-> links: 9w-- lines (movieId,imdbId,tmdbId)
-> ratings: 3kw++ lines (userId,movieId,rating,timestamp)
-> tags: 200w+ lines (userId,movieId,tag,timestamp)
+Warning: Don’t cheat on your homework! (just for uestcer).
 
-## 评测标准
+## Remark
+For more details about the project functionality, please refer to Equation/report/report.md. The project is completed, so it may not receive further maintenance. If you have any questions or encounter any terrifying bugs, feel free to submit an issue with details, or just email me at kytolly.xqy@gmail.com. 
 
-均方误差(Mean Squared Error, MSE): 
+## Reference
 
-## 前期准备工作
-
-1. 学习numpy或pandas的基本使用方法，能够对ratings.csv和movies.csv文件中的数据进行提取。
-
-2. 使用numpy或sklearn中的知识，随机划分训练集、验证集、测试集，比例为8:1:1。不要把训练集作为测试集。
-
-## 预期成果或目标
-
-1. 使用Python语言或利用PyTorch、TensorFlow等深度学习库，复现矩阵分解算法
-
-2. 在标准评测数据集MovieLens上验证该算法，并且能够取得较低的均方误差(MSE不能高于1.5)。
-
-## 参考书目
-
-1. 《推荐系统实践》
-
-2. 《Python编程从入门到实践》
-
-3. 《动手学深度学习》。
-
-## 参考教程
-
-1. [知乎-推荐基础算法之矩阵分解MF，全文可阅读；](https://zhuanlan.zhihu.com/p/268079100)
-
-2. [SVD基础知识](https://www.cnblogs.com/pinard/p/6251584.html)，可以了解一下
-
-3. [推荐系统实战之评分预测问题](https://zhuanlan.zhihu.com/p/241968278)，重点阅读第2.3节；
-
-4. [Netflix Prize 矩阵分解(Matrix factorization)预测用户评分](https://blog.csdn.net/SJTUzhou/article/details/106596803#:~:text=%E7%AC%94%E8%80%85Github%E9%93%BE%E6%8E%A5%EF%BC%9A,https%3A%2F%2Fgithub.com%2FSJTUzhou%2FNetflixPrizeMatrixFactorization)，可参考。
-
-## Info
-助教：郭智慧 prajna2020@foxmail.com
-
-## 作业提交
-1. 将作业过程和作业结果整合为实验报告，发送到助教邮箱prajna2020@foxmail.com
-
-2. 格式（邮件名和文件名）：学号姓名信息检索编程作业（例如：2020080910027张某人信息检索编程作业）
- 注意格式： 没有空格  严格按照 学号姓名信息检索编程作业 的顺序
-
-3. 截止日期：2024年11月20日 
+[知乎-推荐基础算法之矩阵分解MF，全文可阅读；](https://zhuanlan.zhihu.com/p/268079100): An introduction to matrix factorization algorithms commonly used in recommendation systems and their applications, which is worth reading in full.
